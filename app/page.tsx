@@ -1,65 +1,242 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect } from 'react';
+import { useCarStore } from './store/useCarStore';
+import { formatMileage } from './services/carService';
 
 export default function Home() {
+  const {
+    cars,
+    totalCars,
+    currentPage,
+    totalPages,
+    isLoading,
+    error,
+    filters,
+    favorites,
+    availableBrands,
+    fetchCars,
+    fetchBrands,
+    setFilters,
+    resetFilters,
+    loadMore,
+    toggleFavorite,
+    isFavorite,
+  } = useCarStore();
+
+  // Fetch brands and cars on initial load
+  useEffect(() => {
+    fetchBrands();
+    if (cars.length === 0) {
+      fetchCars(true);
+    }
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="p-8 max-w-7xl mx-auto">
+      <h1 className="text-4xl font-bold mb-8">🚗 RentalCar - Store Test</h1>
+
+      {/* Store Stats */}
+      <div className="grid grid-cols-5 gap-4 mb-8">
+        <div className="bg-blue-100 p-4 rounded">
+          <p className="text-sm text-gray-600">Total Cars</p>
+          <p className="text-2xl font-bold">{totalCars}</p>
+        </div>
+        <div className="bg-green-100 p-4 rounded">
+          <p className="text-sm text-gray-600">Loaded</p>
+          <p className="text-2xl font-bold">{cars.length}</p>
+        </div>
+        <div className="bg-purple-100 p-4 rounded">
+          <p className="text-sm text-gray-600">Page</p>
+          <p className="text-2xl font-bold">
+            {currentPage} / {totalPages}
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="bg-pink-100 p-4 rounded">
+          <p className="text-sm text-gray-600">Favorites</p>
+          <p className="text-2xl font-bold">❤️ {favorites.length}</p>
         </div>
-      </main>
+        <div className="bg-yellow-100 p-4 rounded">
+          <p className="text-sm text-gray-600">Brands</p>
+          <p className="text-2xl font-bold">{availableBrands.length}</p>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="bg-gray-100 p-6 rounded-lg mb-8">
+        <h2 className="text-xl font-bold mb-4">
+          🔍 Filters (Backend Filtering)
+        </h2>
+        <div className="grid grid-cols-4 gap-4">
+          {/* Brand Filter */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Car Brand</label>
+            <select
+              className="w-full p-2 border rounded"
+              value={filters.brand || ''}
+              onChange={(e) =>
+                setFilters({ brand: e.target.value || undefined })
+              }
+            >
+              <option value="">Choose a brand</option>
+              {availableBrands.map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Price Filter */}
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Price / hour
+            </label>
+            <select
+              className="w-full p-2 border rounded"
+              value={filters.rentalPrice || ''}
+              onChange={(e) =>
+                setFilters({ rentalPrice: e.target.value || undefined })
+              }
+            >
+              <option value="">Choose a price</option>
+              <option value="30">To $30</option>
+              <option value="40">To $40</option>
+              <option value="50">To $50</option>
+              <option value="60">To $60</option>
+            </select>
+          </div>
+
+          {/* Mileage From */}
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Car mileage / km (From)
+            </label>
+            <input
+              type="number"
+              className="w-full p-2 border rounded"
+              placeholder="From"
+              value={filters.mileageFrom || ''}
+              onChange={(e) =>
+                setFilters({
+                  mileageFrom: e.target.value
+                    ? Number(e.target.value)
+                    : undefined,
+                })
+              }
+            />
+          </div>
+
+          {/* Mileage To */}
+          <div>
+            <label className="block text-sm font-medium mb-2">To</label>
+            <input
+              type="number"
+              className="w-full p-2 border rounded"
+              placeholder="To"
+              value={filters.mileageTo || ''}
+              onChange={(e) =>
+                setFilters({
+                  mileageTo: e.target.value
+                    ? Number(e.target.value)
+                    : undefined,
+                })
+              }
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-4 mt-4">
+          <button
+            onClick={resetFilters}
+            className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Reset Filters
+          </button>
+          <div className="text-sm text-gray-600 flex items-center">
+            Active filters:
+            {filters.brand && ` Brand: ${filters.brand}`}
+            {filters.rentalPrice && ` | Price: $${filters.rentalPrice}`}
+            {filters.mileageFrom && ` | From: ${filters.mileageFrom}km`}
+            {filters.mileageTo && ` | To: ${filters.mileageTo}km`}
+          </div>
+        </div>
+      </div>
+
+      {/* Loading State */}
+      {isLoading && (
+        <div className="text-center py-8">
+          <div className="text-xl">⏳ Loading cars...</div>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          ❌ Error: {error}
+        </div>
+      )}
+
+      {/* Cars Grid */}
+      <div className="grid grid-cols-3 gap-6 mb-8">
+        {cars.map((car) => (
+          <div
+            key={car.id}
+            className="border-2 rounded-lg overflow-hidden hover:shadow-lg transition"
+          >
+            <div className="relative">
+              <img
+                src={car.img}
+                alt={`${car.brand} ${car.model}`}
+                className="w-full h-48 object-cover"
+              />
+              <button
+                onClick={() => toggleFavorite(car.id)}
+                className="absolute top-2 right-2 bg-white p-2 rounded-full hover:bg-gray-100 text-xl"
+              >
+                {isFavorite(car.id) ? '❤️' : '🤍'}
+              </button>
+            </div>
+
+            <div className="p-4">
+              <h3 className="font-bold text-lg mb-2">
+                {car.brand} {car.model}
+              </h3>
+              <div className="text-sm space-y-1">
+                <p>📅 Year: {car.year}</p>
+                <p>💰 ${car.rentalPrice}/day</p>
+                <p>🛣️ Mileage: {formatMileage(car.mileage)} km</p>
+                <p className="text-xs text-gray-500">{car.type}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* No Results */}
+      {!isLoading && cars.length === 0 && (
+        <div className="text-center py-12 text-gray-500">
+          <p className="text-xl">😔 No cars found</p>
+          <p>Try adjusting your filters</p>
+        </div>
+      )}
+
+      {/* Load More Button */}
+      {currentPage < totalPages && !isLoading && (
+        <div className="text-center">
+          <button
+            onClick={loadMore}
+            className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+          >
+            Load More ({cars.length} of {totalCars})
+          </button>
+        </div>
+      )}
+
+      {/* End of Results */}
+      {currentPage >= totalPages && cars.length > 0 && (
+        <div className="text-center text-gray-500 py-4">🏁 All cars loaded</div>
+      )}
     </div>
   );
 }
