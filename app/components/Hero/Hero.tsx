@@ -1,34 +1,3 @@
-// import Link from 'next/link';
-
-// export default function Hero() {
-//   return (
-//     <section className="relative h-[600px]">
-//       <img
-//         src="/Hero image.jpg"
-//         alt="Car"
-//         className="absolute inset-0 w-full h-full object-cover"
-//       />
-
-//       <div className="absolute inset-0 bg-black/40"></div>
-
-//       <div className="relative z-10 h-full flex flex-col justify-center items-center text-white text-center px-4">
-//         <h1 className="text-5xl font-bold mb-4">
-//           Find your perfect rental car
-//         </h1>
-//         <p className="text-xl mb-8">
-//           Reliable and budget-friendly rentals for any journey
-//         </p>
-
-//         <Link
-//           href="/catalog"
-//           className="px-8 py-3 bg-blue-600 rounded-lg hover:bg-blue-700"
-//         >
-//           View Catalog
-//         </Link>
-//       </div>
-//     </section>
-//   );
-// }
 import Image from 'next/image';
 import Link from 'next/link';
 

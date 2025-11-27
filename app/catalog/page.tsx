@@ -31,7 +31,7 @@ export default function CatalogPage() {
       {isLoading && <Loader />}
       {error && <ErrorMessage message={error} />}
 
-      <div className="grid grid-cols-3 gap-6 mt-8">
+      <div className="grid grid-cols-4 gap-6 mt-[32px]">
         {cars.map((car) => (
           <CarCard key={car.id} car={car} />
         ))}

@@ -33,9 +33,6 @@ export default function CarDetails({ car }: CarDetailsProps) {
           <p>
             <strong>Engine:</strong> {car.engineSize}
           </p>
-          <p>
-            <strong>Fuel:</strong> {car.fuelConsumption} L/100km
-          </p>
         </div>
 
         <div>

@@ -27,6 +27,9 @@ ul {
   list-style: none;
   padding: 0;
 }
+img {
+  object-fit: cover;
+}
 
 .Toastify__progress-bar {
   background: linear-gradient(to right, #3470ff, #ffffff);

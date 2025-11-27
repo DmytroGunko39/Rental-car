@@ -19,7 +19,7 @@ export interface Car {
 
 export interface FilterParams {
   brand?: string; // Filter by brand
-  rentalPrice?: string; // Price filter (e.g., "40", "50")
+  rentalPrice?: number; // Price filter (e.g., "40", "50")
   minMileage?: number; // Changed from mileageFrom
   maxMileage?: number; // Changed from mileageTo
   page?: number;
