@@ -1,7 +1,7 @@
 export interface Car {
   id: string;
   year: number;
-  brand: string; // Note: API uses "brand" not "make"
+  brand: string;
   model: string;
   type: string;
   img: string;
@@ -10,18 +10,18 @@ export interface Car {
   engineSize: string;
   accessories: string[];
   functionalities: string[];
-  rentalPrice: string; // Price is a string like "40"
+  rentalPrice: string;
   rentalCompany: string;
   address: string;
-  rentalConditions: string[]; // Array of condition strings
+  rentalConditions: string[];
   mileage: number;
 }
 
 export interface FilterParams {
   brand?: string; // Filter by brand
   rentalPrice?: string; // Price filter (e.g., "40", "50")
-  mileageFrom?: number; // Minimum mileage
-  mileageTo?: number; // Maximum mileage
+  minMileage?: number; // Changed from mileageFrom
+  maxMileage?: number; // Changed from mileageTo
   page?: number;
   limit?: number;
 }

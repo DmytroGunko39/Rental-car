@@ -4,26 +4,16 @@ import { Car, FilterParams } from '../types/car';
 import { getCars, getCarBrands } from '../services/carService';
 
 interface CarStore {
-  // Cars data
   cars: Car[];
   totalCars: number;
   currentPage: number;
   totalPages: number;
-
-  // Loading states
   isLoading: boolean;
   error: string | null;
-
-  // Filters
   filters: FilterParams;
-
-  // Available brands for dropdown
   availableBrands: string[];
+  favorites: string[];
 
-  // Favorites (persisted in localStorage)
-  favorites: string[]; // Array of car IDs
-
-  // Actions
   fetchCars: (resetResults?: boolean) => Promise<void>;
   fetchBrands: () => Promise<void>;
   setFilters: (newFilters: Partial<FilterParams>) => void;
@@ -37,8 +27,8 @@ interface CarStore {
 const initialFilters: FilterParams = {
   brand: undefined,
   rentalPrice: undefined,
-  mileageFrom: undefined,
-  mileageTo: undefined,
+  minMileage: undefined,
+  maxMileage: undefined,
   page: 1,
   limit: 12,
 };
@@ -46,7 +36,6 @@ const initialFilters: FilterParams = {
 export const useCarStore = create<CarStore>()(
   persist(
     (set, get) => ({
-      // Initial state
       cars: [],
       totalCars: 0,
       currentPage: 1,
@@ -57,9 +46,6 @@ export const useCarStore = create<CarStore>()(
       availableBrands: [],
       favorites: [],
 
-      /**
-       * Fetch available car brands from API
-       */
       fetchBrands: async () => {
         try {
           const brands = await getCarBrands();
@@ -70,37 +56,47 @@ export const useCarStore = create<CarStore>()(
         }
       },
 
-      /**
-       * Fetch cars from API with current filters
-       * @param resetResults - If true, clears previous results before fetching (important for new filters!)
-       */
       fetchCars: async (resetResults = false) => {
-        const { filters } = get();
+        const { filters, isLoading, cars } = get();
+
+        if (isLoading) {
+          console.log('⏳ Already loading, skipping...');
+          return;
+        }
 
         set({ isLoading: true, error: null });
 
-        // Clear previous results if this is a new filter search
+        // If resetting, clear cars and start from page 1
         if (resetResults) {
           set({ cars: [], currentPage: 1 });
         }
 
         try {
+          // Determine which page to fetch
+          const pageToFetch = resetResults ? 1 : filters.page || 1;
+
+          console.log(`📡 Fetching page ${pageToFetch} with filters:`, filters);
+
           const response = await getCars({
             ...filters,
-            page: resetResults ? 1 : filters.page,
+            page: pageToFetch,
           });
 
-          set({
+          console.log(
+            `📦 Received ${response.cars.length} cars (Total: ${response.totalCars}, Page: ${response.page}/${response.totalPages})`,
+          );
+
+          set((state) => ({
             cars: resetResults
               ? response.cars
-              : [...get().cars, ...response.cars],
+              : [...state.cars, ...response.cars],
             totalCars: response.totalCars,
-            currentPage: response.page,
-            totalPages: response.totalPages,
+            currentPage: Number(response.page),
+            totalPages: Number(response.totalPages),
             isLoading: false,
-          });
+          }));
 
-          console.log('✅ Cars fetched:', response.cars.length, 'cars');
+          console.log(`✅ Now showing ${get().cars.length} cars total`);
         } catch (error) {
           set({
             error:
@@ -111,57 +107,65 @@ export const useCarStore = create<CarStore>()(
         }
       },
 
-      /**
-       * Update filters and fetch new results
-       * IMPORTANT: Resets previous search results as per requirements!
-       */
       setFilters: (newFilters) => {
+        console.log('🔍 Applying new filters:', newFilters);
+
         set((state) => ({
           filters: {
             ...state.filters,
             ...newFilters,
-            page: 1, // Reset to page 1 when filters change
+            page: 1, // Always reset to page 1 on filter change
           },
         }));
 
-        // Fetch with reset to clear previous results (requirement!)
+        // Clear previous results and fetch new filtered results
         get().fetchCars(true);
       },
 
-      /**
-       * Reset all filters to initial state
-       */
       resetFilters: () => {
-        set({ filters: initialFilters });
+        console.log('🔄 Resetting all filters');
+        set({
+          filters: { ...initialFilters },
+          cars: [],
+          currentPage: 1,
+        });
         get().fetchCars(true);
       },
 
-      /**
-       * Load more cars (pagination)
-       * Backend pagination as per requirements
-       */
       loadMore: async () => {
-        const { currentPage, totalPages, filters } = get();
+        const { currentPage, totalPages, isLoading } = get();
 
-        if (currentPage >= totalPages) {
-          console.log('📄 No more pages to load');
+        if (isLoading) {
+          console.log('⏳ Already loading, please wait...');
           return;
         }
 
+        if (currentPage >= totalPages) {
+          console.log(
+            '📄 All pages loaded (page ' +
+              currentPage +
+              ' of ' +
+              totalPages +
+              ')',
+          );
+          return;
+        }
+
+        const nextPage = Number(currentPage) + 1;
+        console.log(`📄 Loading more: page ${nextPage} of ${totalPages}`);
+
+        // Update the page number in filters
         set((state) => ({
           filters: {
             ...state.filters,
-            page: currentPage + 1,
+            page: nextPage,
           },
         }));
 
-        await get().fetchCars(false); // Don't reset, append results
+        // Fetch next page WITHOUT resetting (append mode)
+        await get().fetchCars(false);
       },
 
-      /**
-       * Toggle car in favorites list
-       * Favorites persist in localStorage as per requirements
-       */
       toggleFavorite: (carId) => {
         set((state) => {
           const isFav = state.favorites.includes(carId);
@@ -173,31 +177,25 @@ export const useCarStore = create<CarStore>()(
           };
         });
 
+        const favStatus = get().isFavorite(carId);
         console.log(
-          get().isFavorite(carId)
-            ? '❤️ Added to favorites'
-            : '💔 Removed from favorites',
+          favStatus
+            ? `❤️ Added ${carId} to favorites`
+            : `💔 Removed ${carId} from favorites`,
         );
       },
 
-      /**
-       * Check if car is in favorites
-       */
       isFavorite: (carId) => {
         return get().favorites.includes(carId);
       },
 
-      /**
-       * Clear all cars (useful when applying new filters)
-       */
       clearCars: () => {
         set({ cars: [], currentPage: 1 });
       },
     }),
     {
-      name: 'car-favorites-storage', // localStorage key
+      name: 'car-favorites-storage',
       storage: createJSONStorage(() => localStorage),
-      // Only persist favorites, not the entire store
       partialize: (state) => ({ favorites: state.favorites }),
     },
   ),

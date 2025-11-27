@@ -14,8 +14,8 @@ export const getCars = async (
       limit = 12,
       brand,
       rentalPrice,
-      mileageFrom,
-      mileageTo,
+      minMileage,
+      maxMileage,
     } = params;
 
     // Build query parameters for backend filtering
@@ -27,12 +27,20 @@ export const getCars = async (
     // Add filters only if they have values
     if (brand) queryParams.brand = brand;
     if (rentalPrice) queryParams.rentalPrice = rentalPrice;
-    if (mileageFrom) queryParams.mileageFrom = mileageFrom;
-    if (mileageTo) queryParams.mileageTo = mileageTo;
+    if (minMileage) queryParams.minMileage = minMileage;
+    if (maxMileage) queryParams.maxMileage = maxMileage;
+
+    console.log('📤 Sending to API:', queryParams); // DEBUG LOG
 
     const response = await apiClient.get<CarsResponse>('/cars', {
       params: queryParams,
     });
+
+    console.log('📥 API Response:', {
+      carsCount: response.data.cars.length,
+      total: response.data.totalCars,
+      page: response.data.page,
+    }); // DEBUG LOG
 
     return response.data;
   } catch (error) {

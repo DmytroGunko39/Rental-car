@@ -116,10 +116,10 @@ export default function Home() {
               type="number"
               className="w-full p-2 border rounded"
               placeholder="From"
-              value={filters.mileageFrom || ''}
+              value={filters.minMileage || ''}
               onChange={(e) =>
                 setFilters({
-                  mileageFrom: e.target.value
+                  minMileage: e.target.value
                     ? Number(e.target.value)
                     : undefined,
                 })
@@ -134,10 +134,10 @@ export default function Home() {
               type="number"
               className="w-full p-2 border rounded"
               placeholder="To"
-              value={filters.mileageTo || ''}
+              value={filters.maxMileage || ''}
               onChange={(e) =>
                 setFilters({
-                  mileageTo: e.target.value
+                  maxMileage: e.target.value
                     ? Number(e.target.value)
                     : undefined,
                 })
@@ -157,8 +157,8 @@ export default function Home() {
             Active filters:
             {filters.brand && ` Brand: ${filters.brand}`}
             {filters.rentalPrice && ` | Price: $${filters.rentalPrice}`}
-            {filters.mileageFrom && ` | From: ${filters.mileageFrom}km`}
-            {filters.mileageTo && ` | To: ${filters.mileageTo}km`}
+            {filters.minMileage && ` | From: ${filters.minMileage}km`}
+            {filters.maxMileage && ` | To: ${filters.maxMileage}km`}
           </div>
         </div>
       </div>
