@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from './components/Header/Header';
 import { Manrope } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -44,6 +45,7 @@ export default function RootLayout({
     <html lang="en" className={manrope.variable}>
       <body className="font-[var(--font-manrope)]">
         <Header />
+        <ToastContainer />
         {children}
       </body>
     </html>

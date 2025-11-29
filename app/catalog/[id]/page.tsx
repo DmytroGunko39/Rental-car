@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getCarById } from '../../services/carService';
 import CarDetails from '../../components/CarDetails/CarDetails';
-import BookingForm from '../../components/BookingForm/BookingForm';
+
 import Loader from '../../components/UI/Loader';
 import { Car } from '../../types/car';
 
@@ -21,9 +21,8 @@ export default function CarDetailsPage() {
   if (!car) return <Loader />;
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-10">
+    <main className="w-full mx-auto px-6 py-10">
       <CarDetails car={car} />
-      <BookingForm car={car} />
     </main>
   );
 }

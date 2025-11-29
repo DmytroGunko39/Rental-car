@@ -1,73 +1,167 @@
 'use client';
 
-import { useState } from 'react';
-import { Car } from '../../types/car';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-interface CarDetailsProps {
+import SendBtn from '../SendBtn/SendBtn';
+
+import { Slide, toast } from 'react-toastify';
+import { Car } from '../../types/car';
+import DatepickerComponent from '../DatePickerComponent/DatepickerComponent';
+
+interface BookingFormProps {
   car: Car;
 }
 
-export default function BookingForm({ car }: CarDetailsProps) {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [date, setDate] = useState('');
+interface FormValues {
+  name: string;
+  email: string;
+  bookingDate: string;
+  comment: string;
+}
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+export default function BookingForm({ car }: BookingFormProps) {
+  const initialValues: FormValues = {
+    name: '',
+    email: '',
+    bookingDate: '',
+    comment: '',
+  };
 
-    if (!name || !phone || !date) {
-      alert('Please fill all fields');
-      return;
-    }
+  const validationSchema = Yup.object({
+    name: Yup.string().trim().required('Name is required'),
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required'),
+    bookingDate: Yup.string().required('Booking date is required'),
+  });
 
-    alert(`You have successfully booked the ${car.brand} ${car.model}!`);
-    setName('');
-    setPhone('');
-    setDate('');
+  const handleSubmit = (values: FormValues, { resetForm }: any) => {
+    toast(`Thank you, ${values.name}. Our manager will contact you shortly.`, {
+      position: 'top-center',
+      autoClose: 5000,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: 'dark',
+      transition: Slide,
+    });
+
+    resetForm();
   };
 
   return (
-    <div className="bg-gray-100 shadow p-6 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Book this car</h2>
+    <div
+      className="
+        flex flex-col gap-6
+        border border-[#dadde1]
+        rounded-[10px]
+        p-8
+        w-full 
+        bg-white
+      "
+    >
+      {/* Header text */}
+      <div className="mb-4">
+        <p className="text-[20px] font-semibold leading-[1.2] text-[#101828] mb-2">
+          Book your car now
+        </p>
+        <p className="text-[16px] font-medium leading-[1.25] text-[#8d929a]">
+          Stay connected! We are always ready to help you.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium">Your name</label>
-          <input
-            className="w-full p-2 border rounded mt-1"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="John Doe"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium">Phone</label>
-          <input
-            className="w-full p-2 border rounded mt-1"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="+380..."
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium">Rental date</label>
-          <input
-            type="date"
-            className="w-full p-2 border rounded mt-1"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-
-        <button
-          className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
-          type="submit"
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
+        <Form
+          className="
+            flex flex-col items-center justify-center
+            gap-8 w-full
+          "
         >
-          Book now
-        </button>
-      </form>
+          {/* Name */}
+
+          <Field
+            name="name"
+            placeholder="Name*"
+            className="
+                w-full
+                h-[48px]
+                rounded-[12px]
+                px-5
+                py-3
+                text-[16px] font-medium
+                border-none outline-none
+                bg-[#f7f7f7]
+                text-[#8d929a]
+                hover:bg-[#e2e0e0]
+                focus:bg-[#e2e0e0]
+                focus:text-[#4e5055]
+                transition
+              "
+          />
+          <ErrorMessage
+            name="name"
+            component="p"
+            className="text-[#2e398a] mt-1 text-sm"
+          />
+
+          {/* Email */}
+
+          <Field
+            name="email"
+            placeholder="Email*"
+            className="
+                w-full
+                h-[48px]
+                rounded-[12px]
+                px-5
+                py-3
+                text-[16px] font-medium
+                border-none outline-none
+                bg-[#f7f7f7]
+                text-[#8d929a]
+                hover:bg-[#e2e0e0]
+                focus:bg-[#e2e0e0]
+                focus:text-[#4e5055]
+                transition
+              "
+          />
+          <ErrorMessage
+            name="email"
+            component="p"
+            className="text-[#2e398a] mt-1 text-sm"
+          />
+
+          <DatepickerComponent name="bookingDate" minDate={new Date()} />
+
+          <Field
+            name="comment"
+            placeholder="Comment"
+            className="
+                w-full
+                h-[48px]
+                rounded-[12px]
+                px-5
+                py-3
+                text-[16px] font-medium
+                border-none outline-none
+                bg-[#f7f7f7]
+                text-[#8d929a]
+                hover:bg-[#e2e0e0]
+                focus:bg-[#e2e0e0]
+                focus:text-[#4e5055]
+                transition
+              "
+          />
+
+          {/* Submit Button */}
+          <SendBtn />
+        </Form>
+      </Formik>
     </div>
   );
 }

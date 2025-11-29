@@ -57,7 +57,7 @@ export default function CarCard({ car }: CarDetailsProps) {
           </p>
           <p className="pl-1">{car.mileage}km</p>
         </div>
-        {/* Learn More Button */}
+        {/* Read More Button */}
         <Link
           href={`/catalog/${car.id}`}
           className="mt-2 w-full py-3 bg-[#3470ff] text-white text-sm font-semibold rounded-xl 
