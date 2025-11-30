@@ -50,7 +50,6 @@ export const useCarStore = create<CarStore>()(
         try {
           const brands = await getCarBrands();
           set({ availableBrands: brands });
-          console.log('✅ Brands loaded:', brands.length);
         } catch (error) {
           console.error('❌ Error fetching brands:', error);
         }
@@ -60,7 +59,6 @@ export const useCarStore = create<CarStore>()(
         const { filters, isLoading, cars } = get();
 
         if (isLoading) {
-          console.log('⏳ Already loading, skipping...');
           return;
         }
 
@@ -75,16 +73,10 @@ export const useCarStore = create<CarStore>()(
           // Determine which page to fetch
           const pageToFetch = resetResults ? 1 : filters.page || 1;
 
-          console.log(`📡 Fetching page ${pageToFetch} with filters:`, filters);
-
           const response = await getCars({
             ...filters,
             page: pageToFetch,
           });
-
-          console.log(
-            `📦 Received ${response.cars.length} cars (Total: ${response.totalCars}, Page: ${response.page}/${response.totalPages})`,
-          );
 
           set((state) => ({
             cars: resetResults
@@ -95,21 +87,16 @@ export const useCarStore = create<CarStore>()(
             totalPages: Number(response.totalPages),
             isLoading: false,
           }));
-
-          console.log(`✅ Now showing ${get().cars.length} cars total`);
         } catch (error) {
           set({
             error:
               error instanceof Error ? error.message : 'Failed to fetch cars',
             isLoading: false,
           });
-          console.error('❌ Error fetching cars:', error);
         }
       },
 
       setFilters: (newFilters) => {
-        console.log('🔍 Applying new filters:', newFilters);
-
         set((state) => ({
           filters: {
             ...state.filters,
@@ -123,7 +110,6 @@ export const useCarStore = create<CarStore>()(
       },
 
       resetFilters: () => {
-        console.log('🔄 Resetting all filters');
         set({
           filters: { ...initialFilters },
           cars: [],
@@ -136,23 +122,14 @@ export const useCarStore = create<CarStore>()(
         const { currentPage, totalPages, isLoading } = get();
 
         if (isLoading) {
-          console.log('⏳ Already loading, please wait...');
           return;
         }
 
         if (currentPage >= totalPages) {
-          console.log(
-            '📄 All pages loaded (page ' +
-              currentPage +
-              ' of ' +
-              totalPages +
-              ')',
-          );
           return;
         }
 
         const nextPage = Number(currentPage) + 1;
-        console.log(`📄 Loading more: page ${nextPage} of ${totalPages}`);
 
         // Update the page number in filters
         set((state) => ({
@@ -178,11 +155,6 @@ export const useCarStore = create<CarStore>()(
         });
 
         const favStatus = get().isFavorite(carId);
-        console.log(
-          favStatus
-            ? `❤️ Added ${carId} to favorites`
-            : `💔 Removed ${carId} from favorites`,
-        );
       },
 
       isFavorite: (carId) => {

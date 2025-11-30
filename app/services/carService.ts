@@ -1,10 +1,9 @@
 import { apiClient } from './api';
 import { Car, FilterParams, CarsResponse } from '../types/car';
 
-/**
- * Fetch cars with optional filters and pagination
- * Backend filtering is performed on the server
- */
+// Fetch cars with optional filters and pagination
+// Backend filtering is performed on the server
+
 export const getCars = async (
   params: FilterParams = {},
 ): Promise<CarsResponse> => {
@@ -30,17 +29,9 @@ export const getCars = async (
     if (minMileage) queryParams.minMileage = minMileage;
     if (maxMileage) queryParams.maxMileage = maxMileage;
 
-    console.log('📤 Sending to API:', queryParams); // DEBUG LOG
-
     const response = await apiClient.get<CarsResponse>('/cars', {
       params: queryParams,
     });
-
-    console.log('📥 API Response:', {
-      carsCount: response.data.cars.length,
-      total: response.data.totalCars,
-      page: response.data.page,
-    }); // DEBUG LOG
 
     return response.data;
   } catch (error) {
@@ -62,10 +53,8 @@ export const getCarById = async (id: string): Promise<Car> => {
   }
 };
 
-/**
- * Get all available car brands from API
- * Uses the dedicated /brands endpoint
- */
+//Get all available car brands from API
+
 export const getCarBrands = async (): Promise<string[]> => {
   try {
     const response = await apiClient.get<string[]>('/brands');
@@ -76,10 +65,8 @@ export const getCarBrands = async (): Promise<string[]> => {
   }
 };
 
-/**
- * Get available price options for filter
- * Extract unique rental prices from cars
- */
+//Get available price options for filter
+
 export const getRentalPrices = async (): Promise<string[]> => {
   try {
     const response = await apiClient.get<CarsResponse>('/cars', {
