@@ -4,8 +4,12 @@ import { useCarStore } from '../../store/useCarStore';
 import { customStyles } from '../../helpers/customStylesSelect';
 import { carPriceOptions } from '../../helpers/selectorOptions';
 import dynamic from 'next/dynamic';
-import { Option } from '../../helpers/selectorOptions';
-const Select = dynamic(() => import('react-select'), { ssr: false });
+import type { Props as SelectProps, SingleValue } from 'react-select';
+import { BrandOption, PriceOption } from '../../helpers/selectorOptions';
+
+const Select = dynamic(() => import('react-select'), {
+  ssr: false,
+});
 export default function Filters() {
   const { filters, availableBrands, setFilters, resetFilters } = useCarStore();
 
@@ -24,7 +28,7 @@ export default function Filters() {
               : null
           }
           onChange={(newValue) => {
-            const option = newValue as { label: string; value: string } | null;
+            const option = newValue as BrandOption | null;
             setFilters({ brand: option?.value });
           }}
           options={availableBrands.map((b) => ({
@@ -53,10 +57,14 @@ export default function Filters() {
               : null
           }
           onChange={(newValue) => {
-            const option = newValue as Option | null;
-            setFilters({ rentalPrice: option?.value });
+            const option = newValue as PriceOption | null;
+            setFilters({ rentalPrice: option?.value ?? undefined });
           }}
           isClearable
+          formatOptionLabel={(option, { context }) => {
+            const opt = option as PriceOption;
+            return context === 'menu' ? opt.label : `To $${opt.label}`;
+          }}
         />
       </div>
 

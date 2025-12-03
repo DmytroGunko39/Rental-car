@@ -1,8 +1,7 @@
-export type Option = {
-  value: number;
-  label: string;
-};
-export const carPriceOptions: Option[] = [
+export type BrandOption = { label: string; value: string };
+export type PriceOption = { label: string; value: number };
+
+export const carPriceOptions: PriceOption[] = [
   { value: 40, label: '40' },
   { value: 50, label: '50' },
   { value: 60, label: '60' },
