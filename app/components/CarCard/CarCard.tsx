@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Car } from '../../types/car';
 import { useCarStore } from '@/app/store/useCarStore';
 import IconHeart from '../UI/IconHeart';
+import { formatMileage } from '@/app/services/carService';
 
 interface CarDetailsProps {
   car: Car;
@@ -55,7 +56,7 @@ export default function CarCard({ car }: CarDetailsProps) {
           <p className="px-1 relative after:content-[''] after:absolute after:-right-1 after:top-0 after:w-[1px] after:bg-[#8d929a] after:h-full">
             {car.type}
           </p>
-          <p className="pl-1">{car.mileage}km</p>
+          <p className="pl-1">{formatMileage(car.mileage)} km</p>
         </div>
         {/* Read More Button */}
         <Link

@@ -10,6 +10,7 @@ import { BsFuelPump } from 'react-icons/bs';
 import { GoGear } from 'react-icons/go';
 
 import BookingForm from '../BookingForm/BookingForm';
+import { formatMileage } from '@/app/services/carService';
 
 interface CarDetailsProps {
   car: Car;
@@ -49,7 +50,7 @@ export default function CarDetails({ car }: CarDetailsProps) {
               <IoLocationOutline className="text-[20px]" />
               {city} {country}
             </span>
-            Mileage: {car.mileage}km
+            Mileage: {formatMileage(car.mileage)} km
           </p>
 
           <p className="flex items-center gap-2 text-[#3470ff] text-[24px] font-semibold mb-8">

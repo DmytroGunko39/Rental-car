@@ -84,10 +84,7 @@ export const getRentalPrices = async (): Promise<string[]> => {
   }
 };
 
-/**
- * Format mileage with space separator
- * Example: 5000 -> "5 000"
- */
+// Format mileage with space separator:  5000 -> "5 000"
 export const formatMileage = (mileage: number): string => {
   return mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 };

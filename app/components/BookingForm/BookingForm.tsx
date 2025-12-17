@@ -139,14 +139,15 @@ export default function BookingForm({ car }: BookingFormProps) {
           <DatepickerComponent name="bookingDate" minDate={new Date()} />
 
           <Field
+            as="textarea"
             name="comment"
             placeholder="Comment"
             className="
                 w-full
-                h-[48px]
+                h-[88px]
                 rounded-[12px]
                 px-5
-                py-3
+                pt-3 pb-3 
                 text-[16px] font-medium
                 border-none outline-none
                 bg-[#f7f7f7]
@@ -155,6 +156,7 @@ export default function BookingForm({ car }: BookingFormProps) {
                 focus:bg-[#e2e0e0]
                 focus:text-[#4e5055]
                 transition
+                 resize-none
               "
           />
 

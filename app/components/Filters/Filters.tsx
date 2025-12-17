@@ -120,6 +120,7 @@ export default function Filters() {
           text-white text-[16px] leading-[1.25] font-semibold
           rounded-[12px]
           transition-all hover:bg-[#0b44cd]
+          cursor-pointer
         "
       >
         Search
