@@ -79,9 +79,10 @@ export default function Filters() {
           <input
             placeholder="From"
             className="
-              bg-[#f7f7f7] h-[44px] w-[100px]
+              bg-[#f7f7f7] h-[44px] w-[160px]
               rounded-l-[12px] border-none outline-none
-              pl-3 text-[14px]
+              pl-[24px] text-base font-medium leading-[1.25] text-[#101828]
+      placeholder:text-[#101828] placeholder:opacity-50
             "
             value={filters.minMileage || ''}
             onChange={(e) =>
@@ -91,14 +92,18 @@ export default function Filters() {
             }
           />
 
+          {/* SEPARATOR */}
+          <div className="h-[44px] w-[1px] bg-[#dadde1]"></div>
+
           {/* TO */}
           <input
             placeholder="To"
             className="
-              bg-[#f7f7f7] h-[44px] w-[100px]
+              bg-[#f7f7f7] h-[44px] w-[160px]
               rounded-r-[12px] border-none outline-none
-              pl-3 text-[14px]
-              border-l border-[#dadde1]
+              pl-[24px] text-base font-medium leading-[1.25] text-[#101828]
+      placeholder:text-[#101828] placeholder:opacity-50
+              
             "
             value={filters.maxMileage || ''}
             onChange={(e) =>
