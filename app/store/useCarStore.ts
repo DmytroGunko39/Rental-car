@@ -56,7 +56,7 @@ export const useCarStore = create<CarStore>()(
       },
 
       fetchCars: async (resetResults = false) => {
-        const { filters, isLoading, cars } = get();
+        const { filters, isLoading } = get();
 
         if (isLoading) {
           return;
