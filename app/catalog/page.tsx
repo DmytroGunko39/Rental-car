@@ -6,7 +6,6 @@ import Filters from '../components/Filters/Filters';
 import CarCard from '../components/CarCard/CarCard';
 import Loader from '../components/UI/Loader';
 import ErrorMessage from '../components/UI/ErrorMessage';
-import css from './CatalogPage.module.css';
 
 export default function CatalogPage() {
   const {
@@ -40,7 +39,19 @@ export default function CatalogPage() {
 
       {!isLoading && currentPage < totalPages && (
         <div className="text-center mt-10">
-          <button onClick={loadMore} className={css.loadMoreBtn}>
+          <button
+            onClick={loadMore}
+            className=" border border-[#3470ff]
+    rounded-[12px]
+    px-[38px] py-[12px]
+    min-w-[156px]
+    h-[44px]
+    font-manrope font-semibold
+    text-[16px] leading-[1.25]
+    text-[#101828]
+    cursor-pointer
+    hover:border-[#0b44cd]"
+          >
             Load More
           </button>
         </div>
