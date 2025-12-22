@@ -6,6 +6,7 @@ import { customStyles } from '../../helpers/customStylesSelect';
 import { carPriceOptions } from '../../helpers/selectorOptions';
 import dynamic from 'next/dynamic';
 import { BrandOption, PriceOption } from '../../helpers/selectorOptions';
+import { formatNumber, parseNumber } from '@/app/helpers/numberFormatFilter';
 
 const Select = dynamic(() => import('react-select'), {
   ssr: false,
@@ -22,6 +23,12 @@ export default function Filters() {
     maxMileage: undefined as number | undefined,
   });
 
+  //string (для показу з комами);
+  const [displayValues, setDisplayValues] = useState({
+    minMileage: '',
+    maxMileage: '',
+  });
+
   // Sync local filters with store filters when store resets
   useEffect(() => {
     setLocalFilters({
@@ -29,6 +36,11 @@ export default function Filters() {
       rentalPrice: filters.rentalPrice,
       minMileage: filters.minMileage,
       maxMileage: filters.maxMileage,
+    });
+
+    setDisplayValues({
+      minMileage: formatNumber(filters.minMileage),
+      maxMileage: formatNumber(filters.maxMileage),
     });
   }, [
     filters.brand,
@@ -54,6 +66,11 @@ export default function Filters() {
       rentalPrice: undefined,
       minMileage: undefined,
       maxMileage: undefined,
+    });
+
+    setDisplayValues({
+      minMileage: '',
+      maxMileage: '',
     });
 
     // Reset store filters (this also triggers fetchCars automatically)
@@ -129,21 +146,31 @@ export default function Filters() {
               From
             </span>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               className="
         bg-transparent flex-1
         border-none outline-none
         text-lg font-medium text-[#101828]
       "
-              value={localFilters.minMileage || ''}
-              onChange={(e) =>
+              value={displayValues.minMileage}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                setDisplayValues({ ...displayValues, minMileage: value });
+
                 setLocalFilters({
                   ...localFilters,
-                  minMileage: e.target.value
-                    ? Number(e.target.value)
-                    : undefined,
-                })
-              }
+                  minMileage: parseNumber(value),
+                });
+              }}
+              onBlur={() => {
+                setDisplayValues({
+                  ...displayValues,
+                  minMileage: formatNumber(localFilters.minMileage),
+                });
+              }}
             />
           </div>
 
@@ -156,19 +183,29 @@ export default function Filters() {
               To
             </span>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric" //shows the numeric keyboard on mobile devices! 📱
+              pattern="[0-9]*"
               className="
         bg-transparent flex-1
         border-none outline-none
         text-lg font-medium text-[#101828]
       "
-              value={localFilters.maxMileage || ''}
-              onChange={(e) =>
+              value={displayValues.maxMileage}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                setDisplayValues({ ...displayValues, maxMileage: value });
+
                 setLocalFilters({
                   ...localFilters,
-                  maxMileage: e.target.value
-                    ? Number(e.target.value)
-                    : undefined,
+                  maxMileage: parseNumber(value),
+                });
+              }}
+              onBlur={() =>
+                setDisplayValues({
+                  ...displayValues,
+                  maxMileage: formatNumber(localFilters.maxMileage),
                 })
               }
             />

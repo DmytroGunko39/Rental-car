@@ -35,7 +35,6 @@ export const customStyles = {
     ...base,
     backgroundColor: ' #f7f7f7',
     color: state.isSelected ? '#101828' : state.isFocused ? '#101828' : null,
-
     padding: '10px',
     border: 'none',
   }),
