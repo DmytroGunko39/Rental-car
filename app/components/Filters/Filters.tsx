@@ -6,7 +6,7 @@ import { customStyles } from '../../helpers/customStylesSelect';
 import { carPriceOptions } from '../../helpers/selectorOptions';
 import dynamic from 'next/dynamic';
 import { BrandOption, PriceOption } from '../../helpers/selectorOptions';
-import { formatNumber, parseNumber } from '@/app/helpers/numberFormatFilter';
+import { useFormattedNumberInput } from '@/app/helpers/useFormattedNumberInput';
 
 const Select = dynamic(() => import('react-select'), {
   ssr: false,
@@ -19,43 +19,27 @@ export default function Filters() {
   const [localFilters, setLocalFilters] = useState({
     brand: undefined as string | undefined,
     rentalPrice: undefined as number | undefined,
-    minMileage: undefined as number | undefined,
-    maxMileage: undefined as number | undefined,
   });
 
-  //string (для показу з комами);
-  const [displayValues, setDisplayValues] = useState({
-    minMileage: '',
-    maxMileage: '',
-  });
+  // Use the custom hook for mileage inputs
+  const minMileageInput = useFormattedNumberInput(filters.minMileage);
+  const maxMileageInput = useFormattedNumberInput(filters.maxMileage);
 
   // Sync local filters with store filters when store resets
   useEffect(() => {
     setLocalFilters({
       brand: filters.brand,
       rentalPrice: filters.rentalPrice,
-      minMileage: filters.minMileage,
-      maxMileage: filters.maxMileage,
     });
-
-    setDisplayValues({
-      minMileage: formatNumber(filters.minMileage),
-      maxMileage: formatNumber(filters.maxMileage),
-    });
-  }, [
-    filters.brand,
-    filters.rentalPrice,
-    filters.minMileage,
-    filters.maxMileage,
-  ]);
+  }, [filters.brand, filters.rentalPrice]);
 
   const handleSearch = () => {
     // Apply filters to store (this triggers fetchCars automatically)
     setFilters({
       brand: localFilters.brand,
       rentalPrice: localFilters.rentalPrice,
-      minMileage: localFilters.minMileage,
-      maxMileage: localFilters.maxMileage,
+      minMileage: minMileageInput.rawValue,
+      maxMileage: maxMileageInput.rawValue,
     });
   };
 
@@ -64,14 +48,11 @@ export default function Filters() {
     setLocalFilters({
       brand: undefined,
       rentalPrice: undefined,
-      minMileage: undefined,
-      maxMileage: undefined,
     });
 
-    setDisplayValues({
-      minMileage: '',
-      maxMileage: '',
-    });
+    // Reset mileage inputs using hook's reset function
+    minMileageInput.reset();
+    maxMileageInput.reset();
 
     // Reset store filters (this also triggers fetchCars automatically)
     resetFilters();
@@ -154,23 +135,11 @@ export default function Filters() {
         border-none outline-none
         text-lg font-medium text-[#101828]
       "
-              value={displayValues.minMileage}
+              value={minMileageInput.displayValue}
               onChange={(e) => {
-                const value = e.target.value;
-
-                setDisplayValues({ ...displayValues, minMileage: value });
-
-                setLocalFilters({
-                  ...localFilters,
-                  minMileage: parseNumber(value),
-                });
+                minMileageInput.handleChange(e.target.value);
               }}
-              onBlur={() => {
-                setDisplayValues({
-                  ...displayValues,
-                  minMileage: formatNumber(localFilters.minMileage),
-                });
-              }}
+              onBlur={minMileageInput.handleBlur}
             />
           </div>
 
@@ -191,23 +160,11 @@ export default function Filters() {
         border-none outline-none
         text-lg font-medium text-[#101828]
       "
-              value={displayValues.maxMileage}
+              value={maxMileageInput.displayValue}
               onChange={(e) => {
-                const value = e.target.value;
-
-                setDisplayValues({ ...displayValues, maxMileage: value });
-
-                setLocalFilters({
-                  ...localFilters,
-                  maxMileage: parseNumber(value),
-                });
+                maxMileageInput.handleChange(e.target.value);
               }}
-              onBlur={() =>
-                setDisplayValues({
-                  ...displayValues,
-                  maxMileage: formatNumber(localFilters.maxMileage),
-                })
-              }
+              onBlur={maxMileageInput.handleBlur}
             />
           </div>
         </div>
