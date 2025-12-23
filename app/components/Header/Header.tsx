@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from '../Logo/Logo';
+import { navItems, isItemActive } from '@/app/helpers/nav-items';
 
 export default function Header() {
   const path = usePathname();
@@ -19,21 +20,15 @@ export default function Header() {
         </Link>
 
         <div className="flex gap-8">
-          <Link
-            href="/"
-            className={`${baseLink} ${path === '/' ? active : inactive}`}
-          >
-            Home
-          </Link>
-
-          <Link
-            href="/catalog"
-            className={`${baseLink} ${
-              path.startsWith('/catalog') ? active : inactive
-            }`}
-          >
-            Catalog
-          </Link>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`${baseLink} ${isItemActive(path, item) ? active : inactive}`}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </nav>
     </header>
