@@ -28,14 +28,14 @@ export default function CatalogPage() {
     <main className="max-w-7xl mx-auto px-6 py-10">
       <Filters />
 
-      {isLoading && <Loader />}
-      {error && <ErrorMessage message={error} />}
-
       <div className="grid grid-cols-4 gap-6 mt-[32px]">
         {cars.map((car) => (
           <CarCard key={car.id} car={car} />
         ))}
       </div>
+
+      {isLoading && <Loader />}
+      {error && <ErrorMessage message={error} />}
 
       {!isLoading && currentPage < totalPages && (
         <div className="text-center mt-10">
