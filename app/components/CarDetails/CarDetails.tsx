@@ -63,16 +63,13 @@ export default function CarDetails({ car }: CarDetailsProps) {
         </div>
 
         {/* Block 2 – Rental Conditions */}
-        <div className="mb-10">
+        <div className="mb-[94px]">
           <h2 className="font-semibold text-[24px] leading-[1.33] text-[#101828] mb-4">
             Rental Conditions:
           </h2>
           <ul>
             {car.rentalConditions.map((condition, i) => (
-              <li
-                key={i}
-                className="flex items-center gap-2 mb-4 last:mb-[110px]"
-              >
+              <li key={i} className="flex items-center gap-2 mb-4">
                 <FaRegCheckCircle className="text-[#3470ff]" />
                 {condition}
               </li>
@@ -99,7 +96,7 @@ export default function CarDetails({ car }: CarDetailsProps) {
               <BsFuelPump /> Consumption: {car.fuelConsumption}
             </li>
 
-            <li className="flex items-center gap-2 mb-4 last:mb-[110px]">
+            <li className="flex items-center gap-2 mb-4 last:mb-[94px]">
               <GoGear /> Engine Size: {car.engineSize}
             </li>
           </ul>

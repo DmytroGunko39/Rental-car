@@ -16,7 +16,7 @@ interface BookingFormProps {
 interface FormValues {
   name: string;
   email: string;
-  bookingDate: string;
+  bookingDate: Date | null;
   comment: string;
 }
 
@@ -24,7 +24,7 @@ export default function BookingForm({ car }: BookingFormProps) {
   const initialValues: FormValues = {
     name: '',
     email: '',
-    bookingDate: '',
+    bookingDate: null,
     comment: '',
   };
 
@@ -33,7 +33,7 @@ export default function BookingForm({ car }: BookingFormProps) {
     email: Yup.string()
       .email('Invalid email address')
       .required('Email is required'),
-    bookingDate: Yup.string().required('Booking date is required'),
+    bookingDate: Yup.date().nullable().required('Booking date is required'),
   });
 
   const handleSubmit = (values: FormValues, { resetForm }: any) => {
@@ -43,7 +43,7 @@ export default function BookingForm({ car }: BookingFormProps) {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      theme: 'dark',
+      theme: 'light',
       transition: Slide,
     });
 

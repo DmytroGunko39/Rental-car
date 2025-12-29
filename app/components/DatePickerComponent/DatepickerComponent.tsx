@@ -4,6 +4,7 @@ import { useField, useFormikContext } from 'formik';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './datePicker.css';
+
 interface DatepickerProps {
   name: string;
   minDate?: Date;
@@ -14,16 +15,17 @@ export default function DatepickerComponent({
   minDate,
 }: DatepickerProps) {
   const { setFieldValue } = useFormikContext<any>();
-  const [field] = useField(name);
+  const [field, meta] = useField(name);
 
   return (
-    <DatePicker
-      selected={field.value}
-      onChange={(val) => setFieldValue(name, val)}
-      dateFormat="dd/MM/yyyy"
-      placeholderText="Booking date"
-      minDate={minDate}
-      className="
+    <>
+      <DatePicker
+        selected={field.value}
+        onChange={(val: Date | null) => setFieldValue(name, val)}
+        dateFormat="dd/MM/yyyy"
+        placeholderText="Booking date"
+        minDate={minDate}
+        className="
         w-[570px] h-[48px]
         rounded-[12px]
         px-5 py-3
@@ -36,6 +38,10 @@ export default function DatepickerComponent({
         focus:text-[#4e5055]
         transition
       "
-    />
+      />
+      {meta.touched && meta.error && (
+        <p className="text-[#2e398a] mt-1 text-sm">{meta.error}</p>
+      )}
+    </>
   );
 }
