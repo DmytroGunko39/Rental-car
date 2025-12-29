@@ -7,7 +7,7 @@ import SendBtn from '../SendBtn/SendBtn';
 
 import { Slide, toast } from 'react-toastify';
 import { Car } from '../../types/car';
-import DatepickerComponent from '../DatePickerComponent/DatepickerComponent';
+import DatepickerComponent from '../DatePickerComponent/DateRangePickerComponent';
 
 interface BookingFormProps {
   car: Car;
@@ -16,7 +16,8 @@ interface BookingFormProps {
 interface FormValues {
   name: string;
   email: string;
-  bookingDate: Date | null;
+  bookingStartDate: Date | null;
+  bookingEndDate: Date | null;
   comment: string;
 }
 
@@ -24,7 +25,8 @@ export default function BookingForm({ car }: BookingFormProps) {
   const initialValues: FormValues = {
     name: '',
     email: '',
-    bookingDate: null,
+    bookingStartDate: null,
+    bookingEndDate: null,
     comment: '',
   };
 
@@ -33,7 +35,16 @@ export default function BookingForm({ car }: BookingFormProps) {
     email: Yup.string()
       .email('Invalid email address')
       .required('Email is required'),
-    bookingDate: Yup.date().nullable().required('Booking date is required'),
+    bookingStartDate: Yup.date()
+      .nullable()
+      .required('Start date date is required'),
+    bookingEndDate: Yup.date()
+      .nullable()
+      .required('End date date is required')
+      .min(
+        Yup.ref('bookingStartDate'),
+        'End date must be the same or after start date',
+      ),
   });
 
   const handleSubmit = (values: FormValues, { resetForm }: any) => {
@@ -136,7 +147,11 @@ export default function BookingForm({ car }: BookingFormProps) {
             className="text-[#2e398a] mt-1 text-sm"
           />
 
-          <DatepickerComponent name="bookingDate" minDate={new Date()} />
+          <DatepickerComponent
+            startName="bookingStartDate"
+            endName="bookingEndDate"
+            minDate={new Date()}
+          />
 
           <Field
             as="textarea"
