@@ -28,7 +28,7 @@ export default function CatalogPage() {
     <main className="max-w-7xl mx-auto px-6 py-10">
       <Filters />
 
-      <div className="grid grid-cols-4 gap-6 mt-[32px]">
+      <div className="grid grid-cols-4 gap-x-[32px] gap-y-[48px] mt-[56px]">
         {cars.map((car) => (
           <CarCard key={car.id} car={car} />
         ))}
@@ -38,7 +38,7 @@ export default function CatalogPage() {
       {error && <ErrorMessage message={error} />}
 
       {!isLoading && currentPage < totalPages && (
-        <div className="text-center mt-10">
+        <div className="text-center mt-20">
           <button
             onClick={loadMore}
             className=" border border-[#3470ff]

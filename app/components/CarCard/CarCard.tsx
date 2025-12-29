@@ -19,7 +19,7 @@ export default function CarCard({ car }: CarDetailsProps) {
         <img
           src={car.img}
           alt={`${car.brand} ${car.model}`}
-          className="w-full h-full object-fill"
+          className="w-full h-full object-cover"
         />
 
         {/* Favorite button */}
@@ -61,7 +61,7 @@ export default function CarCard({ car }: CarDetailsProps) {
         {/* Read More Button */}
         <Link
           href={`/catalog/${car.id}`}
-          className="mt-2 w-full py-3 bg-[#3470ff] text-white text-sm font-semibold rounded-xl 
+          className="mt-5 w-full py-3 bg-[#3470ff] text-white text-sm font-semibold rounded-xl 
                      hover:bg-[#0b44cd] transition-colors text-center"
         >
           Read more

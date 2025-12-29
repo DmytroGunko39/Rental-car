@@ -35,17 +35,17 @@ export default function CarDetails({ car }: CarDetailsProps) {
       </div>
 
       {/* RIGHT SIDE: INFORMATION */}
-      <div className="flex flex-col max-w-[500px]">
+      <div className="flex flex-col max-w-[488px]">
         {/* Block 1 – Main Info */}
-        <div className="mb-10">
-          <h2 className="font-semibold text-[24px] leading-[1.33] text-[#101828]">
+        <div className="mb-[68px]">
+          <h2 className="font-semibold text-[24px] leading-[1.33] text-[#101828] mb-2">
             {car.brand} <span className="text-[#3470ff]">{car.model}</span>,{' '}
             <span className="text-[#8d929a] text-[16px] font-medium">
               Id: {car.id.slice(0, 4)}
             </span>
           </h2>
 
-          <p className="flex items-center gap-4 mt-4 mb-4 font-medium text-[16px]">
+          <p className="flex items-center gap-4 mb-4 font-medium text-[16px]">
             <span className="flex items-center gap-1">
               <IoLocationOutline className="text-[20px]" />
               {city} {country}
@@ -57,7 +57,7 @@ export default function CarDetails({ car }: CarDetailsProps) {
             <TbCurrencyDollar /> {car.rentalPrice}
           </p>
 
-          <p className="text-[16px] font-medium leading-[1.25] text-[#101828] mb-[68px]">
+          <p className="text-[16px] font-medium leading-[1.25] text-[#101828] ">
             {car.description}
           </p>
         </div>
