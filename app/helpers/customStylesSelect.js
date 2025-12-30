@@ -31,11 +31,20 @@ export const customStyles = {
   indicatorSeparator: () => ({
     display: 'none',
   }),
+
+  dropdownIndicator: (base, state) => ({
+    ...base,
+    transition: 'transform 0.3s ease',
+    transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+    color: ' #101828',
+    marginRight: '6px',
+  }),
   option: (base, state) => ({
     ...base,
     backgroundColor: ' #f7f7f7',
     color: state.isSelected ? '#101828' : state.isFocused ? '#101828' : null,
     padding: '10px',
     border: 'none',
+    cursor: 'pointer',
   }),
 };

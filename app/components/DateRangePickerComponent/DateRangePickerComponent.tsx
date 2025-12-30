@@ -1,10 +1,9 @@
 'use client';
 
-import { useField, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './datePicker.css';
-import { start } from 'repl';
+import './DateRangePickerComponent.css';
 
 interface DateRangePickerProps {
   startName: string;
@@ -12,7 +11,7 @@ interface DateRangePickerProps {
   minDate?: Date;
 }
 
-export default function DatepickerComponent({
+export default function DateRangePickerComponent({
   startName,
   endName,
   minDate,

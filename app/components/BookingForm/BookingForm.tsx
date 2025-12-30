@@ -2,12 +2,10 @@
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
 import SendBtn from '../SendBtn/SendBtn';
-
 import { Slide, toast } from 'react-toastify';
 import { Car } from '../../types/car';
-import DatepickerComponent from '../DatePickerComponent/DateRangePickerComponent';
+import DateRangePickerComponent from '../DateRangePickerComponent/DateRangePickerComponent';
 
 interface BookingFormProps {
   car: Car;
@@ -94,7 +92,6 @@ export default function BookingForm({ car }: BookingFormProps) {
           "
         >
           {/* Name */}
-
           <Field
             name="name"
             placeholder="Name*"
@@ -121,7 +118,6 @@ export default function BookingForm({ car }: BookingFormProps) {
           />
 
           {/* Email */}
-
           <Field
             name="email"
             placeholder="Email*"
@@ -147,7 +143,7 @@ export default function BookingForm({ car }: BookingFormProps) {
             className="text-[#2e398a] mt-1 text-sm"
           />
 
-          <DatepickerComponent
+          <DateRangePickerComponent
             startName="bookingStartDate"
             endName="bookingEndDate"
             minDate={new Date()}
