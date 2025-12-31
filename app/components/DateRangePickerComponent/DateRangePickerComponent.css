@@ -17,10 +17,28 @@
 }
 .react-datepicker__header {
   background-color: #f7f7f7;
+  border-bottom: none;
+  padding: 12px 12px 12px 12px;
+}
+
+/* weekday row, with the blue line attached to it */
+.react-datepicker__day-names {
+  position: relative;
+  padding-bottom: 12px;
+  margin: 0;
+}
+
+/* draw the blue line under the weekdays */
+.react-datepicker__day-names::after {
+  content: '';
+  position: absolute;
+  left: -12px; /* match header horizontal padding */
+  right: -12px;
+  bottom: 0;
   border-bottom: 1px solid #3470ff;
 }
+
 h2.react-datepicker__current-month {
-  margin-bottom: 14px;
   background-color: #f7f7f7;
 }
 .react-datepicker__day-name {
@@ -29,8 +47,8 @@ h2.react-datepicker__current-month {
   font-size: 12px;
   line-height: 1.2;
   text-align: center;
-
   color: #8d929a;
+  text-transform: uppercase;
 }
 .react-datepicker__navigation-icon::before,
 .react-datepicker__year-read-view--down-arrow,
@@ -45,6 +63,20 @@ h2.react-datepicker__current-month {
   position: absolute;
   top: 6px;
   width: 9px;
+}
+
+.react-datepicker__navigation--next {
+  right: 13px;
+  top: 11px;
+  width: 24px;
+  height: 24px;
+}
+
+.react-datepicker__navigation--previous {
+  left: 13px;
+  top: 11px;
+  width: 24px;
+  height: 24px;
 }
 
 .react-datepicker__day,

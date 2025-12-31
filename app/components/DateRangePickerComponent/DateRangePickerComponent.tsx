@@ -5,6 +5,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DateRangePickerComponent.css';
 
+import { registerLocale } from 'react-datepicker';
+import customEn from '../../helpers/locales/en-custom';
+
+registerLocale('custom-en', customEn);
+
 interface DateRangePickerProps {
   startName: string;
   endName: string;
@@ -32,6 +37,7 @@ export default function DateRangePickerComponent({
           setFieldValue(startName, start);
           setFieldValue(endName, end);
         }}
+        locale="custom-en"
         dateFormat="dd/MM/yyyy"
         placeholderText="Booking date"
         minDate={minDate}
