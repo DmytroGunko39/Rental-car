@@ -42,27 +42,27 @@ export default function DateRangePickerComponent({
         placeholderText="Booking date"
         minDate={minDate}
         className="
-        w-[570px] h-[48px]
-        rounded-[12px]
+        w-[570px] h-12
+        rounded-xl
         px-5 py-3
-        bg-[#f7f7f7]
-        border-none outline-none
-        text-[16px] font-medium
-        text-[#8d929a]
-        hover:bg-[#e2e0e0]
-        focus:bg-[#e2e0e0]
-        focus:text-[#4e5055]
-        transition
+        bg-gray-50
+        border border-transparent outline-none
+        text-base font-medium
+        text-gray-700
+        placeholder:text-gray-400
+        hover:bg-gray-100
+        focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
+        transition-all duration-200
       "
       />
 
       {touched[startName] && errors[startName] && (
-        <p className="text-[#2e398a] mt-1 text-sm">
+        <p className="text-red-500 mt-1 text-sm font-medium">
           {errors[startName] as string}
         </p>
       )}
       {touched[endName] && errors[endName] && (
-        <p className="text-[#2e398a] mt-1 text-sm">
+        <p className="text-red-500 mt-1 text-sm font-medium">
           {errors[endName] as string}
         </p>
       )}

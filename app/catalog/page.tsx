@@ -25,10 +25,10 @@ export default function CatalogPage() {
   }, []);
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-10">
+    <main className="max-w-7xl mx-auto px-6 py-12">
       <Filters />
 
-      <div className="grid grid-cols-4 gap-x-[32px] gap-y-[48px] mt-[56px]">
+      <div className="grid grid-cols-4 gap-x-8 gap-y-12 mt-14">
         {cars.map((car) => (
           <CarCard key={car.id} car={car} />
         ))}
@@ -38,19 +38,21 @@ export default function CatalogPage() {
       {error && <ErrorMessage message={error} />}
 
       {!isLoading && currentPage < totalPages && (
-        <div className="text-center mt-20">
+        <div className="text-center mt-16">
           <button
             onClick={loadMore}
-            className=" border border-[#3470ff]
-    rounded-[12px]
-    px-[38px] py-[12px]
+            className="border-2 border-[#3470ff]
+    rounded-xl
+    px-10 py-2
     min-w-[156px]
-    h-[44px]
-    font-manrope font-semibold
-    text-[16px] leading-[1.25]
-    text-[#101828]
+    h-11
+    font-semibold
+    text-base
+    text-[#3470ff]
     cursor-pointer
-    hover:border-[#0b44cd]"
+    transition-all duration-300
+    hover:bg-blue-50 hover:border-[#0b44cd] hover:text-[#0b44cd]
+    active:scale-[0.98]"
           >
             Load More
           </button>

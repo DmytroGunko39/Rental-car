@@ -58,10 +58,10 @@ export default function Filters() {
     resetFilters();
   };
   return (
-    <div className="flex justify-center items-end gap-4 mt-[84px]">
+    <div className="flex justify-center items-end gap-5 mt-20">
       {/* BRAND */}
       <div className="flex flex-col">
-        <label className="text-[12px] text-[#8d929a] mb-2 font-medium">
+        <label className="text-xs text-gray-500 mb-2 font-medium tracking-wide">
           Car brand
         </label>
 
@@ -87,7 +87,7 @@ export default function Filters() {
 
       {/* PRICE */}
       <div className="flex flex-col">
-        <label className="text-[12px] text-[#8d929a] mb-2 font-medium">
+        <label className="text-xs text-gray-500 mb-2 font-medium tracking-wide">
           Price / 1 hour
         </label>
 
@@ -116,14 +116,14 @@ export default function Filters() {
 
       {/* MILEAGE */}
       <div className="flex flex-col">
-        <label className="text-[12px] text-[#8d929a] mb-2 font-medium">
+        <label className="text-xs text-gray-500 mb-2 font-medium tracking-wide">
           Car mileage / km
         </label>
 
         <div className="flex items-center">
           {/* FROM */}
-          <div className="bg-[#f7f7f7] h-[44px] w-[160px] rounded-l-[12px] flex items-center px-6">
-            <span className="text-lg font-medium text-[#101828] mr-2 whitespace-nowrap">
+          <div className="bg-gray-50 h-11 w-[160px] rounded-l-xl flex items-center px-5 border border-r-0 border-gray-200 focus-within:border-blue-400 focus-within:bg-white transition-colors">
+            <span className="text-base font-medium text-gray-700 mr-2 whitespace-nowrap">
               From
             </span>
             <input
@@ -133,7 +133,7 @@ export default function Filters() {
               className="
         bg-transparent flex-1
         border-none outline-none
-        text-lg font-medium text-[#101828]
+        text-base font-medium text-gray-800
       "
               value={minMileageInput.displayValue}
               onChange={(e) => {
@@ -144,11 +144,11 @@ export default function Filters() {
           </div>
 
           {/* SEPARATOR */}
-          <div className="h-[44px] w-[1px] bg-[#dadde1]"></div>
+          <div className="h-11 w-px bg-gray-200"></div>
 
           {/* TO */}
-          <div className="bg-[#f7f7f7] h-[44px] w-[160px] rounded-r-[12px] flex items-center px-6">
-            <span className="text-lg font-medium text-[#101828] mr-2 whitespace-nowrap">
+          <div className="bg-gray-50 h-11 w-[160px] rounded-r-xl flex items-center px-5 border border-l-0 border-gray-200 focus-within:border-blue-400 focus-within:bg-white transition-colors">
+            <span className="text-base font-medium text-gray-700 mr-2 whitespace-nowrap">
               To
             </span>
             <input
@@ -158,7 +158,7 @@ export default function Filters() {
               className="
         bg-transparent flex-1
         border-none outline-none
-        text-lg font-medium text-[#101828]
+        text-base font-medium text-gray-800
       "
               value={maxMileageInput.displayValue}
               onChange={(e) => {
@@ -177,11 +177,13 @@ export default function Filters() {
           onClick={handleSearch}
           className="
           flex justify-center items-center
-          w-[156px] h-[44px]
+          w-[156px] h-11
           bg-[#3470ff]
-          text-white text-[16px] leading-[1.25] font-semibold
-          rounded-[12px]
-          transition-all hover:bg-[#0b44cd]
+          text-white text-base font-semibold
+          rounded-xl
+          transition-all duration-300
+          hover:bg-[#0b44cd] hover:shadow-lg hover:shadow-blue-500/25
+          active:scale-[0.98]
           cursor-pointer
         "
         >
@@ -191,17 +193,17 @@ export default function Filters() {
         {/* RESET */}
         <button
           onClick={handleReset}
-          className=" flex justify-center items-center
-      min-w-[156px] h-[44px]
-      border border-[#3470ff]
-      rounded-[12px]
-      px-[38px] py-[12px]
-      text-[#101828]
-      text-[16px] leading-[1.25] font-semibold
-      font-manrope
+          className="flex justify-center items-center
+      min-w-[156px] h-11
+      border-2 border-[#3470ff]
+      rounded-xl
+      px-9 py-3
+      text-[#3470ff]
+      text-base font-semibold
       cursor-pointer
-      transition-all
-      hover:border-[#0b44cd]"
+      transition-all duration-300
+      hover:bg-blue-50 hover:border-[#0b44cd] hover:text-[#0b44cd]
+      active:scale-[0.98]"
         >
           Reset
         </button>

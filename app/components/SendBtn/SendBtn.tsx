@@ -6,12 +6,13 @@ export default function SendBtn() {
       type="submit"
       className="
         flex justify-center items-center
-        w-[156px] h-[44px]
-        rounded-[12px]
-        px-[51px] py-[12px]
-        bg-[#3470ff] text-white text-[16px] leading-[1.25]
-        transition-all duration-200
-        hover:bg-[#0b44cd]
+        w-[156px] h-11
+        rounded-xl
+        px-12 py-3
+        bg-[#3470ff] text-white text-base font-semibold
+        transition-all duration-300 ease-out
+        hover:bg-[#0b44cd] hover:shadow-lg hover:shadow-blue-500/30
+        active:scale-[0.98]
         cursor-pointer border-none
       "
     >

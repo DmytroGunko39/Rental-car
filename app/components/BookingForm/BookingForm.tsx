@@ -63,19 +63,20 @@ export default function BookingForm({ car }: BookingFormProps) {
     <div
       className="
         flex flex-col gap-6
-        border border-[#dadde1]
-        rounded-[10px]
+        border border-gray-200
+        rounded-2xl
         p-8
         w-full 
         bg-white
+        shadow-sm
       "
     >
       {/* Header text */}
       <div className="mb-4">
-        <p className="text-[20px] font-semibold leading-[1.2] text-[#101828] mb-2">
+        <p className="text-xl font-bold leading-tight text-gray-900 mb-2">
           Book your car now
         </p>
-        <p className="text-[16px] font-medium leading-[1.25] text-[#8d929a]">
+        <p className="text-base font-medium leading-relaxed text-gray-500">
           Stay connected! We are always ready to help you.
         </p>
       </div>
@@ -97,24 +98,24 @@ export default function BookingForm({ car }: BookingFormProps) {
             placeholder="Name*"
             className="
                 w-full
-                h-[48px]
-                rounded-[12px]
+                h-12
+                rounded-xl
                 px-5
                 py-3
-                text-[16px] font-medium
-                border-none outline-none
-                bg-[#f7f7f7]
-                text-[#8d929a]
-                hover:bg-[#e2e0e0]
-                focus:bg-[#e2e0e0]
-                focus:text-[#4e5055]
-                transition
+                text-base font-medium
+                border border-transparent outline-none
+                bg-gray-50
+                text-gray-700
+                placeholder:text-gray-400
+                hover:bg-gray-100
+                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
+                transition-all duration-200
               "
           />
           <ErrorMessage
             name="name"
             component="p"
-            className="text-[#2e398a] mt-1 text-sm"
+            className="text-red-500 mt-1 text-sm font-medium"
           />
 
           {/* Email */}
@@ -123,24 +124,24 @@ export default function BookingForm({ car }: BookingFormProps) {
             placeholder="Email*"
             className="
                 w-full
-                h-[48px]
-                rounded-[12px]
+                h-12
+                rounded-xl
                 px-5
                 py-3
-                text-[16px] font-medium
-                border-none outline-none
-                bg-[#f7f7f7]
-                text-[#8d929a]
-                hover:bg-[#e2e0e0]
-                focus:bg-[#e2e0e0]
-                focus:text-[#4e5055]
-                transition
+                text-base font-medium
+                border border-transparent outline-none
+                bg-gray-50
+                text-gray-700
+                placeholder:text-gray-400
+                hover:bg-gray-100
+                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
+                transition-all duration-200
               "
           />
           <ErrorMessage
             name="email"
             component="p"
-            className="text-[#2e398a] mt-1 text-sm"
+            className="text-red-500 mt-1 text-sm font-medium"
           />
 
           <DateRangePickerComponent
@@ -155,19 +156,19 @@ export default function BookingForm({ car }: BookingFormProps) {
             placeholder="Comment"
             className="
                 w-full
-                h-[88px]
-                rounded-[12px]
+                h-24
+                rounded-xl
                 px-5
                 pt-3 pb-3 
-                text-[16px] font-medium
-                border-none outline-none
-                bg-[#f7f7f7]
-                text-[#8d929a]
-                hover:bg-[#e2e0e0]
-                focus:bg-[#e2e0e0]
-                focus:text-[#4e5055]
-                transition
-                 resize-none
+                text-base font-medium
+                border border-transparent outline-none
+                bg-gray-50
+                text-gray-700
+                placeholder:text-gray-400
+                hover:bg-gray-100
+                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
+                transition-all duration-200
+                resize-none
               "
           />
 

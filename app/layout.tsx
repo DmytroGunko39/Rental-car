@@ -43,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={manrope.variable}>
-      <body className="font-[var(--font-manrope)]">
+      <body className="font-[var(--font-manrope)] bg-white text-gray-900 antialiased">
         <Header />
         <ToastContainer />
         {children}

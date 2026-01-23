@@ -21,7 +21,7 @@ export default function CarDetailsPage() {
   if (!car) return <Loader />;
 
   return (
-    <main className="w-full mx-auto px-6 py-10">
+    <main className="w-full mx-auto px-6 py-12 bg-gray-50/50 min-h-screen">
       <CarDetails car={car} />
     </main>
   );
