@@ -3,7 +3,6 @@
 import { useFormikContext } from 'formik';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './DateRangePickerComponent.css';
 
 import { registerLocale } from 'react-datepicker';
 import customEn from '../../helpers/locales/en-custom';
@@ -42,7 +41,7 @@ export default function DateRangePickerComponent({
         placeholderText="Booking date"
         minDate={minDate}
         className="
-        w-[570px] h-12
+        w-full h-12
         rounded-xl
         px-5 py-3
         bg-gray-50

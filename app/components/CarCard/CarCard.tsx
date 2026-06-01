@@ -13,9 +13,9 @@ export default function CarCard({ car }: CarDetailsProps) {
   const { toggleFavorite, isFavorite } = useCarStore();
 
   return (
-    <div className="max-w-[276px] h-[424px] flex flex-col justify-between relative group">
+    <div className="w-full max-w-[276px] mx-auto h-[424px] flex flex-col justify-between relative group">
       {/* Image Section */}
-      <div className="relative rounded-2xl w-[276px] h-[268px] overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
+      <div className="relative rounded-2xl w-full h-[268px] overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
         <img
           src={car.img}
           alt={`${car.brand} ${car.model}`}

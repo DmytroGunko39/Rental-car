@@ -7,7 +7,7 @@ const customEn = {
 
   options: {
     ...enUS.options,
-    weekStartsOn: 1, // Monday
+    weekStartsOn: 1 as const, // Monday
   },
 
   localize: {

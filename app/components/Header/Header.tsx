@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <header className="w-full bg-gradient-to-r from-slate-50 to-gray-100 border-b border-gray-200/60 shadow-sm">
-      <nav className="w-full flex items-center justify-between py-5 px-[120px] font-medium text-[16px] leading-tight text-center">
+      <nav className="w-full flex flex-col items-center gap-3 py-4 px-4 font-medium text-[16px] leading-tight text-center sm:flex-row sm:justify-between sm:py-5 sm:px-10 lg:px-[120px]">
         <Link
           href="/"
           className="flex items-center transition-transform duration-300 hover:scale-105"
@@ -22,7 +22,7 @@ export default function Header() {
           <Logo className="w-[102px] h-auto" />
         </Link>
 
-        <div className="flex gap-8">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
           {navItems.map((item) => (
             <Link
               key={item.href}

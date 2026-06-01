@@ -58,7 +58,7 @@ export default function Filters() {
     resetFilters();
   };
   return (
-    <div className="flex justify-center items-end gap-5 mt-20">
+    <div className="flex flex-col items-center gap-4 mt-8 sm:mt-12 md:flex-row md:flex-wrap md:justify-center md:items-end md:gap-5 xl:flex-nowrap xl:mt-20">
       {/* BRAND */}
       <div className="flex flex-col">
         <label className="text-xs text-gray-500 mb-2 font-medium tracking-wide">

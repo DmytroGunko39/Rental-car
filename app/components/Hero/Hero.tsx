@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[80vh] flex flex-col justify-end items-center pb-16">
+    <section className="relative w-full h-[80vh] flex flex-col justify-end items-center pb-8 sm:pb-16">
       {/* Background image */}
       <Image
         src="/Hero image.jpg"
@@ -18,11 +18,11 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-white text-center gap-5">
-        <h1 className="text-6xl font-bold leading-tight tracking-tight drop-shadow-lg">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight drop-shadow-lg px-4">
           Find your perfect rental car
         </h1>
 
-        <p className="text-2xl font-medium leading-relaxed text-white/90 max-w-2xl">
+        <p className="text-base sm:text-xl md:text-2xl font-medium leading-relaxed text-white/90 max-w-2xl px-4">
           Reliable and budget-friendly rentals for any journey
         </p>
 

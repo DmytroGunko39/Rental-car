@@ -22,9 +22,9 @@ export default function CarDetails({ car }: CarDetailsProps) {
   const country = addressParts[2]?.trim();
 
   return (
-    <div className="flex justify-center gap-16 mt-20 px-8">
+    <div className="flex flex-col gap-8 mt-8 px-4 md:px-8 lg:flex-row lg:justify-center lg:gap-16 lg:mt-20">
       {/* LEFT SIDE: IMAGE + FORM */}
-      <div className="flex flex-col items-center gap-10 w-[640px]">
+      <div className="flex flex-col items-center gap-10 w-full lg:w-[640px]">
         <img
           src={car.img}
           alt={`${car.brand} ${car.model}`}
@@ -35,9 +35,9 @@ export default function CarDetails({ car }: CarDetailsProps) {
       </div>
 
       {/* RIGHT SIDE: INFORMATION */}
-      <div className="flex flex-col max-w-[488px]">
+      <div className="flex flex-col w-full lg:max-w-[488px]">
         {/* Block 1 – Main Info */}
-        <div className="mb-16">
+        <div className="mb-8 lg:mb-16">
           <h2 className="font-bold text-2xl leading-tight text-gray-900 mb-3">
             {car.brand} <span className="text-[#3470ff]">{car.model}</span>,{' '}
             <span className="text-gray-400 text-base font-medium">
@@ -63,7 +63,7 @@ export default function CarDetails({ car }: CarDetailsProps) {
         </div>
 
         {/* Block 2 – Rental Conditions */}
-        <div className="mb-20">
+        <div className="mb-10 lg:mb-20">
           <h2 className="font-bold text-xl leading-tight text-gray-900 mb-5">
             Rental Conditions:
           </h2>
@@ -106,7 +106,7 @@ export default function CarDetails({ car }: CarDetailsProps) {
         </div>
 
         {/* Block 4 – Accessories + Functionalities */}
-        <div className="pb-20">
+        <div className="pb-10 lg:pb-20">
           <h2 className="font-bold text-xl leading-tight text-gray-900 mb-5">
             Accessories and functionalities:
           </h2>

@@ -25,10 +25,10 @@ export default function CatalogPage() {
   }, []);
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-12">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <Filters />
 
-      <div className="grid grid-cols-4 gap-x-8 gap-y-12 mt-14">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 sm:gap-y-12 mt-8 sm:mt-14">
         {cars.map((car) => (
           <CarCard key={car.id} car={car} />
         ))}
