@@ -40,6 +40,7 @@ export default function DateRangePickerComponent({
         dateFormat="dd/MM/yyyy"
         placeholderText="Booking date"
         minDate={minDate}
+        wrapperClassName="w-full"
         className="
         w-full h-12
         rounded-xl
